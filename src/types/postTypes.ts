@@ -10,4 +10,5 @@ export type Post = {
   id: string;
   text: string;
   tags: PostTags;
+  date: Date;
 };

@@ -1,5 +1,3 @@
-// import { useState } from 'react';
-import './App.css';
 import { NewPostBlock } from '@/components/NewPostBlock';
 import { PostList } from '@/components/PostList';
 import { useEffect, useState } from 'react';
@@ -22,10 +20,10 @@ function HomePage() {
   }, []);
 
   return (
-    <>
+    <main className='mx-auto max-w-[768px] px-5'>
       <NewPostBlock posts={posts} setPosts={setPosts} />
       <PostList posts={posts} setPosts={setPosts} />
-    </>
+    </main>
   );
 }
 

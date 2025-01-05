@@ -32,22 +32,22 @@ export function NewPostBlock({ posts, setPosts }: Props) {
           onSubmit={async (e) => {
             e.preventDefault();
             console.log('submit');
-            setPosts((st) => [
-              {
-                id: nanoid(),
-                text: postText,
-                tags: postTags,
-                date: postDate ? postDate : new Date(),
-              },
-              ...st,
-            ]);
-            // Preferences.set({
-            //   key: 'posts',
-            //   value: JSON.stringify([
-            //     { id: nanoid(), text: postText, tags: postTags },
-            //     ...posts,
-            //   ]),
-            // });
+
+            setPosts((st) =>
+              [
+                {
+                  id: nanoid(),
+                  text: postText,
+                  tags: postTags,
+                  date: postDate ? postDate : new Date(),
+                },
+                ...st,
+              ].sort(
+                (a: Post, b: Post) =>
+                  new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+              ),
+            );
+
             postActions.addPost(
               {
                 id: nanoid(),
@@ -55,11 +55,11 @@ export function NewPostBlock({ posts, setPosts }: Props) {
                 tags: postTags,
                 date: postDate ? postDate : new Date(),
               },
-              posts
+              posts,
             );
 
             setPostText('');
-            // setPostDate(new Date());
+            setPostDate(new Date());
             setPostTags({
               red: false,
               green: false,

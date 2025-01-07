@@ -6,8 +6,8 @@ import { PostTagItem } from './PostTagItem';
 import { nanoid } from 'nanoid';
 import { DatePicker } from './DatePicker';
 import { postActions } from '@/actions/postActions';
-import { DateIsReserved } from './DateIsReserved';
 import { CancelIcon } from './Icons/CancelIcon';
+import dayjs from 'dayjs';
 
 type Props = {
   posts: Post[];
@@ -25,6 +25,21 @@ export function NewPostBlock({ posts, setPosts }: Props) {
     fuchsia: false,
   });
   const [isDateReserved, setIsDateReserved] = useState(false);
+
+  React.useEffect(() => {
+    console.log('🚀 ~ React.useEffect ~ postDate:', postDate);
+    const res = posts.find(
+      (post) =>
+        dayjs(post.date).format('YYYY-MM-DD') ===
+        dayjs(postDate).format('YYYY-MM-DD'),
+    );
+    if (res) {
+      console.log('🚀 ~ React.useEffect ~ res:', res);
+      setIsDateReserved(true);
+    } else {
+      setIsDateReserved(false);
+    }
+  }, [postDate, posts]);
 
   return (
     <>
@@ -129,13 +144,13 @@ export function NewPostBlock({ posts, setPosts }: Props) {
         ) : null}
       </div>
       {(Boolean(postText.length) ||
-        Object.values(postTags).some((postTag) => postTag)) && (
-        <DateIsReserved
-          posts={posts}
-          postDate={postDate}
-          setIsDateReserved={setIsDateReserved}
-        />
-      )}
+        Object.values(postTags).some((postTag) => postTag)) &&
+        isDateReserved && (
+          <p className='text-justify text-orange-600'>
+            На эту дату уже есть запись. Внесите изменения в существующую запись
+            или измените дату.
+          </p>
+        )}
     </>
   );
 }

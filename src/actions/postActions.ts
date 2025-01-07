@@ -1,4 +1,5 @@
-import { seedPosts } from '@/seed/seedPosts';
+// import { seedPostsFaker } from '@/seed/seedPostsFaker';
+import { seedPostsProd } from '@/seed/seedPostsProd';
 import { Post } from '@/types/postTypes';
 import { Preferences } from '@capacitor/preferences';
 
@@ -8,10 +9,11 @@ export const postActions = {
       key: 'posts',
       value: JSON.stringify(
         [{ id, text, tags, date }, ...posts].sort(
-          (a: Post, b: Post) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
-        )
+          (a: Post, b: Post) =>
+            new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+        ),
       ),
-    }) ; 
+    });
   },
 
   setPosts: (posts: Post[]) => {
@@ -35,7 +37,8 @@ export const postActions = {
     if (!res.value) {
       Preferences.set({ key: 'posts', value: JSON.stringify([]) });
       // setPosts([]);
-      await seedPosts();
+      // await seedPostsFaker();
+      await seedPostsProd();
       res = await Preferences.get({ key: 'posts' });
       return JSON.parse(res.value!);
     } else {

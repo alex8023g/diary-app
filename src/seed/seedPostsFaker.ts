@@ -3,7 +3,7 @@ import { Post } from '../types/postTypes';
 import { nanoid } from 'nanoid';
 import { Preferences } from '@capacitor/preferences';
 
-export async function seedPosts() {
+export async function seedPostsFaker() {
   const posts: Post[] = [];
 
   for (let i = 0; i < 100; i++) {
@@ -24,7 +24,8 @@ export async function seedPosts() {
 
     posts.push(post);
     posts.sort(
-      (a: Post, b: Post) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
+      (a: Post, b: Post) =>
+        new Date(b.date).valueOf() - new Date(a.date).valueOf(),
     );
   }
 

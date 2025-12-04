@@ -1,0 +1,45 @@
+{
+  "fill" : {
+    "automatic-gradient" : "extended-srgb:0.00000,0.76471,0.81569,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "Ellipse 6.png",
+          "name" : "Ellipse 6"
+        },
+        {
+          "image-name" : "Ellipse 5.png",
+          "name" : "Ellipse 5"
+        },
+        {
+          "image-name" : "Ellipse 4.png",
+          "name" : "Ellipse 4"
+        },
+        {
+          "image-name" : "Ellipse 3.png",
+          "name" : "Ellipse 3"
+        },
+        {
+          "image-name" : "Ellipse 2.png",
+          "name" : "Ellipse 2"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

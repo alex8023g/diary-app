@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import weekday from 'dayjs/plugin/weekday';
 import { useOutletContext } from 'react-router';
-import { OutletContext } from '@/components/HeaderLayout';
+import { OutletContext } from '@/components/RootLayout';
 
 dayjs.locale('ru');
 dayjs.extend(weekday);
@@ -52,13 +52,15 @@ export function CalendarPage() {
                 }
                 const post = posts.find(
                   (item) =>
-                    dayjs(item.date).month() === dayjs().month(-monthIndex).month() &&
-                    dayjs(item.date).year() === dayjs().month(-monthIndex).year() &&
+                    dayjs(item.date).month() ===
+                      dayjs().month(-monthIndex).month() &&
+                    dayjs(item.date).year() ===
+                      dayjs().month(-monthIndex).year() &&
                     dayjs(item.date).date() ===
                       dayjs()
                         .month(-monthIndex)
                         .date(day + 1)
-                        .date()
+                        .date(),
                 );
                 return (
                   <div key={item} className='bg-white py-2 text-center'>
@@ -72,7 +74,7 @@ export function CalendarPage() {
                               key={color}
                               className={`h-[5px] w-[5px] rounded-full bg-${color}-500`}
                             ></li>
-                          ) : null
+                          ) : null,
                         )}
                     </ul>
                   </div>

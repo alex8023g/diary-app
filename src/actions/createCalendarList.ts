@@ -70,7 +70,7 @@ export function createCalendarList(posts: Post[]) {
         };
       });
 
-    calendarList.push({
+    calendarList.unshift({
       year: dayjs().month(monthIndex).format('YYYY'),
       month: dayjs().month(monthIndex).format('MMMM'),
       days: daysMatrix,
@@ -82,5 +82,6 @@ export function createCalendarList(posts: Post[]) {
     monthIndex -= 1;
   }
 
+  console.log('🚀 ~ createCalendarList ~ calendarList:', calendarList);
   return calendarList;
 }

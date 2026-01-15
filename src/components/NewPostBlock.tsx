@@ -42,7 +42,7 @@ export function NewPostBlock({ posts, addPost }: Props) {
 
   return (
     <>
-      <div className='flex gap-x-4 border-b border-gray-100 pb-1 pt-5'>
+      <div className='flex gap-x-4 border-b border-gray-100 px-5 pb-1 pt-5'>
         <div className='flex-auto'>
           <form
             id='new-post-form'

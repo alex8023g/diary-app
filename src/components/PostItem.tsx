@@ -40,7 +40,7 @@ export function PostItem({ post, updatePost, deletePost }: Props) {
   }
 
   return (
-    <li className='flex gap-x-4 py-5'>
+    <li className='flex gap-x-4 py-5 pl-5'>
       <div className='flex-auto'>
         {isPostEdit ? (
           <form
@@ -91,7 +91,7 @@ export function PostItem({ post, updatePost, deletePost }: Props) {
                     key={color}
                     className={`h-[5px] w-[5px] rounded-full bg-${color}-500`}
                   ></li>
-                ) : null
+                ) : null,
               )}
             </ul>
           )}
@@ -103,7 +103,7 @@ export function PostItem({ post, updatePost, deletePost }: Props) {
           type='submit'
           value='Submit'
           form={`edit-post-form-${post.id}`}
-          className='flex'
+          className='flex w-10'
         >
           <IconEnter className='my-auto size-5' />
         </button>
@@ -114,7 +114,7 @@ export function PostItem({ post, updatePost, deletePost }: Props) {
               asChild
               className='border-0 ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
             >
-              <Button variant={'ghost'} className='my-auto pr-0'>
+              <Button variant={'ghost'} className='my-auto w-10'>
                 <EllipsisVerticalIcon aria-hidden='true' className='h-5 w-5' />
               </Button>
             </DropdownMenuTrigger>
@@ -135,7 +135,9 @@ export function PostItem({ post, updatePost, deletePost }: Props) {
                   deletePost(post.id);
                 }}
               >
-                <span className='mr-auto inline-block text-[#B00000]'>Delete</span>
+                <span className='mr-auto inline-block text-[#B00000]'>
+                  Delete
+                </span>
                 <Trash2 color='#B00000' />
               </DropdownMenuItem>
               <DropdownMenuSeparator />

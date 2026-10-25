@@ -4,12 +4,13 @@ import { useOutletContext } from 'react-router';
 import { OutletContext } from './HeaderLayout';
 
 export default function HomePage() {
-  const { posts, setPosts }: OutletContext = useOutletContext();
+  const { posts, addPost, updatePost, deletePost }: OutletContext =
+    useOutletContext();
 
   return (
     <main className='mx-auto max-w-[768px] px-5'>
-      <NewPostBlock posts={posts} setPosts={setPosts} />
-      <PostList posts={posts} setPosts={setPosts} />
+      <NewPostBlock posts={posts} addPost={addPost} />
+      <PostList posts={posts} updatePost={updatePost} deletePost={deletePost} />
     </main>
   );
 }

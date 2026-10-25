@@ -11,33 +11,18 @@ export function YandexIcon() {
           fill="#ff0000"
           fillOpacity="0"
           strokeMiterlimit="10"
-          fontFamily="none"
-          fontSize="none"
-          fontWeight="none"
-          // style={{ 'mix-blend-mode': 'normal' }}
-          textAnchor="none"
         >
           <path fill="none" d="M-42.7 298.7V-42.7h341.4v341.4z" />
         </g>
         <g
           fill="#ff0000"
           strokeMiterlimit="10"
-          fontFamily="none"
-          fontSize="none"
-          fontWeight="none"
-          // style={{ 'mix-blend-mode': 'normal' }}
-          textAnchor="none"
         >
           <path d="M128 292.6a164.6 164.6 0 0 1 0-329.1 164.6 164.6 0 1 1 0 329.1z" />
         </g>
         <g
           fill="#ffffff"
           strokeMiterlimit="10"
-          fontFamily="none"
-          fontSize="none"
-          fontWeight="none"
-          // style={{ 'mix-blend-mode': 'normal' }}
-          textAnchor="none"
         >
           <g transform="scale(5.33333)">
             <path d="M21.4 47.3h4.9c-.4-4 .7-8.4.3-12.5a17.9 17.9 0 0 1 1.7-8.6c3.5-8.8 5.8-15.8 9-24.7H32c-3 7.5-6 15.2-8 22.9-3.7-6.1-5.2-12.2-7.1-18.4-.1-.4-.3-.9-.7-1.1-.2-.2-.5-.2-.8-.2-1.6-.1-3.1-.2-4.7-.1A185.7 185.7 0 0 1 21 33.4c.2 1.4.4 2.7.4 4.2v9.7z" />

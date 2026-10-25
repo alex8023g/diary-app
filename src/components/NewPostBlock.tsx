@@ -1,20 +1,19 @@
-import React, { Dispatch, useState } from 'react';
+import React, { useState } from 'react';
 import { IconEnter } from './Icons/IconEnter';
 import { Post, PostTags } from '@/types/postTypes';
 import { tagColors } from '@/consts/tagColors';
 import { PostTagItem } from './PostTagItem';
 import { nanoid } from 'nanoid';
 import { DatePicker } from './DatePicker';
-import { postActions } from '@/actions/postActions';
 import { CancelIcon } from './Icons/CancelIcon';
 import dayjs from 'dayjs';
 
 type Props = {
   posts: Post[];
-  setPosts: Dispatch<React.SetStateAction<Post[]>>;
+  addPost: (post: Post) => void;
 };
 
-export function NewPostBlock({ posts, setPosts }: Props) {
+export function NewPostBlock({ posts, addPost }: Props) {
   const [postText, setPostText] = useState('');
   const [postDate, setPostDate] = useState<Date | undefined>(new Date());
   const [postTags, setPostTags] = useState<PostTags>({
@@ -46,36 +45,25 @@ export function NewPostBlock({ posts, setPosts }: Props) {
       <div className='flex gap-x-4 border-b border-gray-100 pb-1 pt-5'>
         <div className='flex-auto'>
           <form
-            id='post-input-form'
+            id='new-post-form'
             action=''
             onSubmit={async (e) => {
               e.preventDefault();
               console.log('submit');
 
-              setPosts((st) =>
-                [
-                  {
-                    id: nanoid(),
-                    text: postText,
-                    tags: postTags,
-                    date: postDate ? postDate : new Date(),
-                  },
-                  ...st,
-                ].sort(
-                  (a: Post, b: Post) =>
-                    new Date(b.date).valueOf() - new Date(a.date).valueOf(),
-                ),
-              );
+              const isEmpty =
+                !postText.trim() &&
+                !Object.values(postTags).some((postTag) => postTag);
+              if (isEmpty || isDateReserved) {
+                return;
+              }
 
-              postActions.addPost(
-                {
-                  id: nanoid(),
-                  text: postText,
-                  tags: postTags,
-                  date: postDate ? postDate : new Date(),
-                },
-                posts,
-              );
+              addPost({
+                id: nanoid(),
+                text: postText,
+                tags: postTags,
+                date: postDate ? postDate : new Date(),
+              });
 
               setPostText('');
               setPostDate(new Date());
@@ -132,7 +120,7 @@ export function NewPostBlock({ posts, setPosts }: Props) {
             <button
               type='submit'
               value='Submit'
-              form='post-input-form'
+              form='new-post-form'
               className='flex'
               // onClick={async () => {
 

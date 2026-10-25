@@ -1,40 +1,23 @@
 import appLogo from '../assets/logo.svg';
 import { Outlet } from 'react-router';
 import { TabsView } from './TabsView';
-import { Dispatch, useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { Post } from '@/types/postTypes';
-// import { Preferences } from '@capacitor/preferences';
-// import { seedPosts } from '@/seed/seedPosts';
-import { postActions } from '@/actions/postActions';
 import { CalendarType } from '@/types/calendarType';
 import { createCalendarList } from '@/actions/createCalendarList';
+import { usePosts } from '@/hooks/usePosts';
 
 export type OutletContext = {
   posts: Post[];
-  setPosts: Dispatch<React.SetStateAction<Post[]>>;
+  addPost: (post: Post) => void;
+  updatePost: (post: Post) => void;
+  deletePost: (id: string) => void;
   calendarList: CalendarType[];
 };
 
 export function HeaderLayout() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [calendarList, setCalendarList] = useState<CalendarType[]>([]);
-
-  useEffect(() => {
-    console.log('useEffect in HeaderLayout');
-    (async () => {
-      const res = await postActions.getAllPosts();
-      setPosts(res);
-      const res2 = await createCalendarList();
-      setCalendarList(res2);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const res2 = await createCalendarList();
-      setCalendarList(res2);
-    })();
-  }, [posts]);
+  const { posts, addPost, updatePost, deletePost } = usePosts();
+  const calendarList = useMemo(() => createCalendarList(posts), [posts]);
 
   return (
     <div>
@@ -50,7 +33,17 @@ export function HeaderLayout() {
           <TabsView />
         </div>
       </header>
-      <Outlet context={{ posts, setPosts, calendarList }} />
+      <Outlet
+        context={
+          {
+            posts,
+            addPost,
+            updatePost,
+            deletePost,
+            calendarList,
+          } satisfies OutletContext
+        }
+      />
     </div>
   );
 }

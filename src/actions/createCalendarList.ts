@@ -4,13 +4,16 @@ import { Post, PostTags } from '@/types/postTypes';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import weekday from 'dayjs/plugin/weekday';
-import { postActions } from './postActions';
 dayjs.locale('ru');
 dayjs.extend(weekday);
 
-export async function createCalendarList() {
-  const posts: Post[] = await postActions.getAllPosts();
-  console.log('🚀 ~ Test1Client ~ posts:', posts);
+export function createCalendarList(posts: Post[]) {
+  // Don't rely on posts being sorted: find the oldest date explicitly.
+  // Starting from today also keeps at least the current month.
+  const oldestDate = posts.reduce((min, post) => {
+    const date = dayjs(post.date);
+    return date.isBefore(min) ? date : min;
+  }, dayjs());
   let monthIndex = dayjs().month();
   // const postIndex = 0;
   const calendarList: CalendarType[] = [];
@@ -73,11 +76,7 @@ export async function createCalendarList() {
       days: daysMatrix,
     });
 
-    if (
-      posts.length === 0 ||
-      dayjs(posts[posts.length - 1].date).format('YYYY-MMMM') ===
-        dayjs().month(monthIndex).format('YYYY-MMMM')
-    ) {
+    if (!dayjs().month(monthIndex).isAfter(oldestDate, 'month')) {
       break;
     }
     monthIndex -= 1;

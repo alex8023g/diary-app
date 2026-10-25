@@ -10,20 +10,19 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import { Pencil, Trash2, X } from 'lucide-react';
-import { Dispatch, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { IconEnter } from './Icons/IconEnter';
 import { Button } from '@/components/ui/button';
 import { tagColors } from '@/consts/tagColors';
 import { PostTagItem } from './PostTagItem';
 import { PostTags, Post } from '@/types/postTypes';
-import { postActions } from '@/actions/postActions';
 
 type Props = {
   post: Post;
-  posts: Post[];
-  setPosts: Dispatch<React.SetStateAction<Post[]>>;
+  updatePost: (post: Post) => void;
+  deletePost: (id: string) => void;
 };
-export function PostItem({ post, posts, setPosts }: Props) {
+export function PostItem({ post, updatePost, deletePost }: Props) {
   const [isPostEdit, setIsPostEdit] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [postContent, setPostContent] = useState(post.text);
@@ -36,12 +35,7 @@ export function PostItem({ post, posts, setPosts }: Props) {
   const postTagsArr = Object.keys(post.tags) as (keyof typeof post.tags)[];
 
   function updPost() {
-    postActions.updPost({ ...post, text: postContent, tags: postTags }, posts);
-    setPosts((st) =>
-      st.map((item) =>
-        item.id === post.id ? { ...item, text: postContent, tags: postTags } : item
-      )
-    );
+    updatePost({ ...post, text: postContent, tags: postTags });
     setIsPostEdit(false);
   }
 
@@ -50,7 +44,7 @@ export function PostItem({ post, posts, setPosts }: Props) {
       <div className='flex-auto'>
         {isPostEdit ? (
           <form
-            id='post-input-form'
+            id={`edit-post-form-${post.id}`}
             action=''
             autoFocus
             onSubmit={(e) => {
@@ -108,11 +102,8 @@ export function PostItem({ post, posts, setPosts }: Props) {
         <button
           type='submit'
           value='Submit'
-          form='post-input-form'
+          form={`edit-post-form-${post.id}`}
           className='flex'
-          onClick={() => {
-            updPost();
-          }}
         >
           <IconEnter className='my-auto size-5' />
         </button>
@@ -141,9 +132,7 @@ export function PostItem({ post, posts, setPosts }: Props) {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onSelect={() => {
-                  const postsMod = posts.filter((item) => item.id !== post.id);
-                  postActions.setPosts(postsMod);
-                  setPosts(postsMod);
+                  deletePost(post.id);
                 }}
               >
                 <span className='mr-auto inline-block text-[#B00000]'>Delete</span>

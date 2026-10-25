@@ -1,17 +1,22 @@
 import { Post } from '@/types/postTypes';
-import { Dispatch } from 'react';
 import { PostItem } from './PostItem';
 
 type Props = {
   posts: Post[];
-  setPosts: Dispatch<React.SetStateAction<Post[]>>;
+  updatePost: (post: Post) => void;
+  deletePost: (id: string) => void;
 };
 
-export function PostList({ posts, setPosts }: Props) {
+export function PostList({ posts, updatePost, deletePost }: Props) {
   return (
     <ul role='list' className='grow divide-y divide-gray-100'>
       {posts.map((post) => (
-        <PostItem key={post.id} post={post} posts={posts} setPosts={setPosts} />
+        <PostItem
+          key={post.id}
+          post={post}
+          updatePost={updatePost}
+          deletePost={deletePost}
+        />
       ))}
     </ul>
   );
